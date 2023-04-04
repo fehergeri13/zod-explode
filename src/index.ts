@@ -1,6 +1,10 @@
-import { z } from "zod"
+import { baseObjectOutputType, z, ZodRawShape, ZodType, ZodTypeDef } from "zod"
 
-const seatSchema = z.object({
+function object<T extends ZodRawShape>(shape: T) {
+  return z.object(shape) as ZodType<baseObjectOutputType<T>, ZodTypeDef, any>;
+}
+
+const seatSchema = object({
   heated: z.boolean(),
   side: z.union([z.literal("left"), z.literal("right"), z.literal("center")]),
   row: z.union([z.literal("1st"), z.literal("2th"), z.literal("3rd")]),
@@ -9,7 +13,7 @@ const seatSchema = z.object({
   adjustable: z.boolean()
 })
 
-const soundSystemSchema = z.object({
+const soundSystemSchema = object({
   radioSupport: z.number(),
   bluetoothSupport: z.boolean(),
   cdSupport: z.boolean(),
@@ -17,24 +21,24 @@ const soundSystemSchema = z.object({
   usbSupport: z.boolean()
 })
 
-const automaticGearSystemSchema = z.object({
+const automaticGearSystemSchema = object({
   planetary: z.boolean(),
   numGears: z.number()
 })
 
-const manualGearSystemSchema = z.object({
+const manualGearSystemSchema = object({
   numGears: z.number(),
   hasReverse: z.literal(true)
 })
 
-const engineSchema = z.object({
+const engineSchema = object({
   power: z.number(),
   cylinders: z.number(),
   fuelType: z.union([z.literal("diesel"), z.literal("bensin")]),
   gearType: z.union([automaticGearSystemSchema, manualGearSystemSchema])
 })
 
-const wheelSchema = z.object({
+const wheelSchema = object({
   branch: z.union([
     z.literal("continental"),
     z.literal("hankook"),
@@ -46,7 +50,7 @@ const wheelSchema = z.object({
   punctureSafe: z.boolean()
 })
 
-const carSchema = z.object({
+const carSchema = object({
   brand: z.string(),
   weight: z.number(),
   productionYear: z.number(),
@@ -56,12 +60,12 @@ const carSchema = z.object({
   soundSystem: soundSystemSchema
 })
 
-const bikeSchema = z.object({
+const bikeSchema = object({
   brand: z.string(),
   color: z.string()
 })
 
-const personSchema = z.object({
+const personSchema = object({
   name: z.string(),
   age: z.number(),
   address: z.string(),
@@ -70,13 +74,13 @@ const personSchema = z.object({
   bike: bikeSchema.optional()
 })
 
-const printerSchema = z.object({
+const printerSchema = object({
   brand: z.string(),
   format: z.union([z.literal("a4"), z.literal("a5")]),
   capacity: z.number()
 })
 
-const companySchema = z.object({
+const companySchema = object({
   ceo: personSchema,
   cfo: personSchema.optional(),
   employees: z.array(personSchema),
@@ -84,19 +88,19 @@ const companySchema = z.object({
   cars: z.array(carSchema)
 })
 
-const parentCompanySchema = z.object({
+const parentCompanySchema = object({
   mainCompany: companySchema,
   subCompanies: z.array(companySchema)
 })
 
-const flagSchema = z.object({
+const flagSchema = object({
   colors: z.array(z.string()),
   orientation: z.string()
 })
 
-const countrySchema = z.object({
+const countrySchema = object({
   flag: flagSchema,
-  departments: z.object({
+  departments: object({
     justice: companySchema,
     rights: companySchema,
     healthcare: companySchema,
@@ -104,34 +108,34 @@ const countrySchema = z.object({
   })
 })
 
-const continentSchema = z.object({
+const continentSchema = object({
   countries: z.array(countrySchema),
   location: z.string(),
   area: z.number(),
   totalPopulation: z.number()
 })
 
-const moonSchema = z.object({
+const moonSchema = object({
   color: z.string(),
   weight: z.number(),
   distance: z.number()
 })
 
-const planetSchema = z.object({
+const planetSchema = object({
   continents: z.array(continentSchema),
   moons: z.array(moonSchema)
 })
 
-const sunSchema = z.object({
+const sunSchema = object({
   diameter: z.number()
 })
 
-const solarSystemSchema = z.object({
+const solarSystemSchema = object({
   planets: z.array(planetSchema),
   sun: sunSchema,
   flyingTesla: carSchema
 })
 
-export const galaxySchema = z.object({
+export const galaxySchema = object({
   systems: z.array(solarSystemSchema)
 })

@@ -24,7 +24,10 @@ __export(src_exports, {
 });
 module.exports = __toCommonJS(src_exports);
 var import_zod = require("zod");
-var seatSchema = import_zod.z.object({
+function object(shape) {
+  return import_zod.z.object(shape);
+}
+var seatSchema = object({
   heated: import_zod.z.boolean(),
   side: import_zod.z.union([import_zod.z.literal("left"), import_zod.z.literal("right"), import_zod.z.literal("center")]),
   row: import_zod.z.union([import_zod.z.literal("1st"), import_zod.z.literal("2th"), import_zod.z.literal("3rd")]),
@@ -32,28 +35,28 @@ var seatSchema = import_zod.z.object({
   comfy: import_zod.z.boolean(),
   adjustable: import_zod.z.boolean()
 });
-var soundSystemSchema = import_zod.z.object({
+var soundSystemSchema = object({
   radioSupport: import_zod.z.number(),
   bluetoothSupport: import_zod.z.boolean(),
   cdSupport: import_zod.z.boolean(),
   casetteSupport: import_zod.z.boolean(),
   usbSupport: import_zod.z.boolean()
 });
-var automaticGearSystemSchema = import_zod.z.object({
+var automaticGearSystemSchema = object({
   planetary: import_zod.z.boolean(),
   numGears: import_zod.z.number()
 });
-var manualGearSystemSchema = import_zod.z.object({
+var manualGearSystemSchema = object({
   numGears: import_zod.z.number(),
   hasReverse: import_zod.z.literal(true)
 });
-var engineSchema = import_zod.z.object({
+var engineSchema = object({
   power: import_zod.z.number(),
   cylinders: import_zod.z.number(),
   fuelType: import_zod.z.union([import_zod.z.literal("diesel"), import_zod.z.literal("bensin")]),
   gearType: import_zod.z.union([automaticGearSystemSchema, manualGearSystemSchema])
 });
-var wheelSchema = import_zod.z.object({
+var wheelSchema = object({
   branch: import_zod.z.union([
     import_zod.z.literal("continental"),
     import_zod.z.literal("hankook"),
@@ -64,7 +67,7 @@ var wheelSchema = import_zod.z.object({
   color: import_zod.z.string(),
   punctureSafe: import_zod.z.boolean()
 });
-var carSchema = import_zod.z.object({
+var carSchema = object({
   brand: import_zod.z.string(),
   weight: import_zod.z.number(),
   productionYear: import_zod.z.number(),
@@ -73,11 +76,11 @@ var carSchema = import_zod.z.object({
   wheels: import_zod.z.tuple([wheelSchema, wheelSchema, wheelSchema, wheelSchema]),
   soundSystem: soundSystemSchema
 });
-var bikeSchema = import_zod.z.object({
+var bikeSchema = object({
   brand: import_zod.z.string(),
   color: import_zod.z.string()
 });
-var personSchema = import_zod.z.object({
+var personSchema = object({
   name: import_zod.z.string(),
   age: import_zod.z.number(),
   address: import_zod.z.string(),
@@ -85,59 +88,59 @@ var personSchema = import_zod.z.object({
   car: carSchema.optional(),
   bike: bikeSchema.optional()
 });
-var printerSchema = import_zod.z.object({
+var printerSchema = object({
   brand: import_zod.z.string(),
   format: import_zod.z.union([import_zod.z.literal("a4"), import_zod.z.literal("a5")]),
   capacity: import_zod.z.number()
 });
-var companySchema = import_zod.z.object({
+var companySchema = object({
   ceo: personSchema,
   cfo: personSchema.optional(),
   employees: import_zod.z.array(personSchema),
   printers: import_zod.z.array(printerSchema),
   cars: import_zod.z.array(carSchema)
 });
-var parentCompanySchema = import_zod.z.object({
+var parentCompanySchema = object({
   mainCompany: companySchema,
   subCompanies: import_zod.z.array(companySchema)
 });
-var flagSchema = import_zod.z.object({
+var flagSchema = object({
   colors: import_zod.z.array(import_zod.z.string()),
   orientation: import_zod.z.string()
 });
-var countrySchema = import_zod.z.object({
+var countrySchema = object({
   flag: flagSchema,
-  departments: import_zod.z.object({
+  departments: object({
     justice: companySchema,
     rights: companySchema,
     healthcare: companySchema,
     education: companySchema
   })
 });
-var continentSchema = import_zod.z.object({
+var continentSchema = object({
   countries: import_zod.z.array(countrySchema),
   location: import_zod.z.string(),
   area: import_zod.z.number(),
   totalPopulation: import_zod.z.number()
 });
-var moonSchema = import_zod.z.object({
+var moonSchema = object({
   color: import_zod.z.string(),
   weight: import_zod.z.number(),
   distance: import_zod.z.number()
 });
-var planetSchema = import_zod.z.object({
+var planetSchema = object({
   continents: import_zod.z.array(continentSchema),
   moons: import_zod.z.array(moonSchema)
 });
-var sunSchema = import_zod.z.object({
+var sunSchema = object({
   diameter: import_zod.z.number()
 });
-var solarSystemSchema = import_zod.z.object({
+var solarSystemSchema = object({
   planets: import_zod.z.array(planetSchema),
   sun: sunSchema,
   flyingTesla: carSchema
 });
-var galaxySchema = import_zod.z.object({
+var galaxySchema = object({
   systems: import_zod.z.array(solarSystemSchema)
 });
 // Annotate the CommonJS export names for ESM import in node:

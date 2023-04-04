@@ -1,6 +1,9 @@
 // src/index.ts
 import { z } from "zod";
-var seatSchema = z.object({
+function object(shape) {
+  return z.object(shape);
+}
+var seatSchema = object({
   heated: z.boolean(),
   side: z.union([z.literal("left"), z.literal("right"), z.literal("center")]),
   row: z.union([z.literal("1st"), z.literal("2th"), z.literal("3rd")]),
@@ -8,28 +11,28 @@ var seatSchema = z.object({
   comfy: z.boolean(),
   adjustable: z.boolean()
 });
-var soundSystemSchema = z.object({
+var soundSystemSchema = object({
   radioSupport: z.number(),
   bluetoothSupport: z.boolean(),
   cdSupport: z.boolean(),
   casetteSupport: z.boolean(),
   usbSupport: z.boolean()
 });
-var automaticGearSystemSchema = z.object({
+var automaticGearSystemSchema = object({
   planetary: z.boolean(),
   numGears: z.number()
 });
-var manualGearSystemSchema = z.object({
+var manualGearSystemSchema = object({
   numGears: z.number(),
   hasReverse: z.literal(true)
 });
-var engineSchema = z.object({
+var engineSchema = object({
   power: z.number(),
   cylinders: z.number(),
   fuelType: z.union([z.literal("diesel"), z.literal("bensin")]),
   gearType: z.union([automaticGearSystemSchema, manualGearSystemSchema])
 });
-var wheelSchema = z.object({
+var wheelSchema = object({
   branch: z.union([
     z.literal("continental"),
     z.literal("hankook"),
@@ -40,7 +43,7 @@ var wheelSchema = z.object({
   color: z.string(),
   punctureSafe: z.boolean()
 });
-var carSchema = z.object({
+var carSchema = object({
   brand: z.string(),
   weight: z.number(),
   productionYear: z.number(),
@@ -49,11 +52,11 @@ var carSchema = z.object({
   wheels: z.tuple([wheelSchema, wheelSchema, wheelSchema, wheelSchema]),
   soundSystem: soundSystemSchema
 });
-var bikeSchema = z.object({
+var bikeSchema = object({
   brand: z.string(),
   color: z.string()
 });
-var personSchema = z.object({
+var personSchema = object({
   name: z.string(),
   age: z.number(),
   address: z.string(),
@@ -61,59 +64,59 @@ var personSchema = z.object({
   car: carSchema.optional(),
   bike: bikeSchema.optional()
 });
-var printerSchema = z.object({
+var printerSchema = object({
   brand: z.string(),
   format: z.union([z.literal("a4"), z.literal("a5")]),
   capacity: z.number()
 });
-var companySchema = z.object({
+var companySchema = object({
   ceo: personSchema,
   cfo: personSchema.optional(),
   employees: z.array(personSchema),
   printers: z.array(printerSchema),
   cars: z.array(carSchema)
 });
-var parentCompanySchema = z.object({
+var parentCompanySchema = object({
   mainCompany: companySchema,
   subCompanies: z.array(companySchema)
 });
-var flagSchema = z.object({
+var flagSchema = object({
   colors: z.array(z.string()),
   orientation: z.string()
 });
-var countrySchema = z.object({
+var countrySchema = object({
   flag: flagSchema,
-  departments: z.object({
+  departments: object({
     justice: companySchema,
     rights: companySchema,
     healthcare: companySchema,
     education: companySchema
   })
 });
-var continentSchema = z.object({
+var continentSchema = object({
   countries: z.array(countrySchema),
   location: z.string(),
   area: z.number(),
   totalPopulation: z.number()
 });
-var moonSchema = z.object({
+var moonSchema = object({
   color: z.string(),
   weight: z.number(),
   distance: z.number()
 });
-var planetSchema = z.object({
+var planetSchema = object({
   continents: z.array(continentSchema),
   moons: z.array(moonSchema)
 });
-var sunSchema = z.object({
+var sunSchema = object({
   diameter: z.number()
 });
-var solarSystemSchema = z.object({
+var solarSystemSchema = object({
   planets: z.array(planetSchema),
   sun: sunSchema,
   flyingTesla: carSchema
 });
-var galaxySchema = z.object({
+var galaxySchema = object({
   systems: z.array(solarSystemSchema)
 });
 export {
