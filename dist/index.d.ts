@@ -1,1080 +1,1091 @@
-import { z, baseObjectOutputType } from 'zod';
+import { z, ZodRawShape, baseObjectOutputType } from 'zod';
+import { objectUtil } from 'zod/lib/helpers/util';
+import { ZodObject, ZodTypeAny, baseObjectInputType } from 'zod/lib/types';
 
-declare const galaxySchema: z.ZodType<baseObjectOutputType<{
-    systems: z.ZodArray<z.ZodType<baseObjectOutputType<{
-        planets: z.ZodArray<z.ZodType<baseObjectOutputType<{
-            continents: z.ZodArray<z.ZodType<baseObjectOutputType<{
-                countries: z.ZodArray<z.ZodType<baseObjectOutputType<{
-                    flag: z.ZodType<baseObjectOutputType<{
+type ObjR<T extends ZodRawShape> = ZodObject<T, "strip", ZodTypeAny, {
+    [k_1 in keyof objectUtil.addQuestionMarks<baseObjectOutputType<T>, {
+        [k in keyof baseObjectOutputType<T>]: undefined extends baseObjectOutputType<T>[k] ? never : k;
+    }[keyof T]>]: objectUtil.addQuestionMarks<baseObjectOutputType<T>, {
+        [k in keyof baseObjectOutputType<T>]: undefined extends baseObjectOutputType<T>[k] ? never : k;
+    }[keyof T]>[k_1];
+}, {
+    [k_2 in keyof baseObjectInputType<T>]: baseObjectInputType<T>[k_2];
+}>;
+declare const galaxySchema: ObjR<{
+    systems: z.ZodArray<ObjR<{
+        planets: z.ZodArray<ObjR<{
+            continents: z.ZodArray<ObjR<{
+                countries: z.ZodArray<ObjR<{
+                    flag: ObjR<{
                         colors: z.ZodArray<z.ZodString, "many">;
                         orientation: z.ZodString;
-                    }>, z.ZodTypeDef, any>;
-                    departments: z.ZodType<baseObjectOutputType<{
-                        justice: z.ZodType<baseObjectOutputType<{
-                            ceo: z.ZodType<baseObjectOutputType<{
+                    }>;
+                    departments: ObjR<{
+                        justice: ObjR<{
+                            ceo: ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>;
-                            cfo: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>;
+                            cfo: z.ZodOptional<ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>>;
-                            employees: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>>;
+                            employees: z.ZodArray<ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>, "many">;
-                            printers: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>, "many">;
+                            printers: z.ZodArray<ObjR<{
                                 brand: z.ZodString;
                                 format: z.ZodUnion<[z.ZodLiteral<"a4">, z.ZodLiteral<"a5">]>;
                                 capacity: z.ZodNumber;
-                            }>, z.ZodTypeDef, any>, "many">;
-                            cars: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                            }>, "many">;
+                            cars: z.ZodArray<ObjR<{
                                 brand: z.ZodString;
                                 weight: z.ZodNumber;
                                 productionYear: z.ZodNumber;
-                                engine: z.ZodType<baseObjectOutputType<{
+                                engine: ObjR<{
                                     power: z.ZodNumber;
                                     cylinders: z.ZodNumber;
                                     fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                    gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                    gearType: z.ZodUnion<[ObjR<{
                                         planetary: z.ZodBoolean;
                                         numGears: z.ZodNumber;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         numGears: z.ZodNumber;
                                         hasReverse: z.ZodLiteral<true>;
-                                    }>, z.ZodTypeDef, any>]>;
-                                }>, z.ZodTypeDef, any>;
-                                seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                    }>]>;
+                                }>;
+                                seats: z.ZodArray<ObjR<{
                                     heated: z.ZodBoolean;
                                     side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                     row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                     color: z.ZodString;
                                     comfy: z.ZodBoolean;
                                     adjustable: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, "many">;
-                                wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                }>, "many">;
+                                wheels: z.ZodTuple<[ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>], null>;
-                                soundSystem: z.ZodType<baseObjectOutputType<{
+                                }>], null>;
+                                soundSystem: ObjR<{
                                     radioSupport: z.ZodNumber;
                                     bluetoothSupport: z.ZodBoolean;
                                     cdSupport: z.ZodBoolean;
                                     casetteSupport: z.ZodBoolean;
                                     usbSupport: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>;
-                            }>, z.ZodTypeDef, any>, "many">;
-                        }>, z.ZodTypeDef, any>;
-                        rights: z.ZodType<baseObjectOutputType<{
-                            ceo: z.ZodType<baseObjectOutputType<{
+                                }>;
+                            }>, "many">;
+                        }>;
+                        rights: ObjR<{
+                            ceo: ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>;
-                            cfo: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>;
+                            cfo: z.ZodOptional<ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>>;
-                            employees: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>>;
+                            employees: z.ZodArray<ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>, "many">;
-                            printers: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>, "many">;
+                            printers: z.ZodArray<ObjR<{
                                 brand: z.ZodString;
                                 format: z.ZodUnion<[z.ZodLiteral<"a4">, z.ZodLiteral<"a5">]>;
                                 capacity: z.ZodNumber;
-                            }>, z.ZodTypeDef, any>, "many">;
-                            cars: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                            }>, "many">;
+                            cars: z.ZodArray<ObjR<{
                                 brand: z.ZodString;
                                 weight: z.ZodNumber;
                                 productionYear: z.ZodNumber;
-                                engine: z.ZodType<baseObjectOutputType<{
+                                engine: ObjR<{
                                     power: z.ZodNumber;
                                     cylinders: z.ZodNumber;
                                     fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                    gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                    gearType: z.ZodUnion<[ObjR<{
                                         planetary: z.ZodBoolean;
                                         numGears: z.ZodNumber;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         numGears: z.ZodNumber;
                                         hasReverse: z.ZodLiteral<true>;
-                                    }>, z.ZodTypeDef, any>]>;
-                                }>, z.ZodTypeDef, any>;
-                                seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                    }>]>;
+                                }>;
+                                seats: z.ZodArray<ObjR<{
                                     heated: z.ZodBoolean;
                                     side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                     row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                     color: z.ZodString;
                                     comfy: z.ZodBoolean;
                                     adjustable: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, "many">;
-                                wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                }>, "many">;
+                                wheels: z.ZodTuple<[ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>], null>;
-                                soundSystem: z.ZodType<baseObjectOutputType<{
+                                }>], null>;
+                                soundSystem: ObjR<{
                                     radioSupport: z.ZodNumber;
                                     bluetoothSupport: z.ZodBoolean;
                                     cdSupport: z.ZodBoolean;
                                     casetteSupport: z.ZodBoolean;
                                     usbSupport: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>;
-                            }>, z.ZodTypeDef, any>, "many">;
-                        }>, z.ZodTypeDef, any>;
-                        healthcare: z.ZodType<baseObjectOutputType<{
-                            ceo: z.ZodType<baseObjectOutputType<{
+                                }>;
+                            }>, "many">;
+                        }>;
+                        healthcare: ObjR<{
+                            ceo: ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>;
-                            cfo: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>;
+                            cfo: z.ZodOptional<ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>>;
-                            employees: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>>;
+                            employees: z.ZodArray<ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>, "many">;
-                            printers: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>, "many">;
+                            printers: z.ZodArray<ObjR<{
                                 brand: z.ZodString;
                                 format: z.ZodUnion<[z.ZodLiteral<"a4">, z.ZodLiteral<"a5">]>;
                                 capacity: z.ZodNumber;
-                            }>, z.ZodTypeDef, any>, "many">;
-                            cars: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                            }>, "many">;
+                            cars: z.ZodArray<ObjR<{
                                 brand: z.ZodString;
                                 weight: z.ZodNumber;
                                 productionYear: z.ZodNumber;
-                                engine: z.ZodType<baseObjectOutputType<{
+                                engine: ObjR<{
                                     power: z.ZodNumber;
                                     cylinders: z.ZodNumber;
                                     fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                    gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                    gearType: z.ZodUnion<[ObjR<{
                                         planetary: z.ZodBoolean;
                                         numGears: z.ZodNumber;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         numGears: z.ZodNumber;
                                         hasReverse: z.ZodLiteral<true>;
-                                    }>, z.ZodTypeDef, any>]>;
-                                }>, z.ZodTypeDef, any>;
-                                seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                    }>]>;
+                                }>;
+                                seats: z.ZodArray<ObjR<{
                                     heated: z.ZodBoolean;
                                     side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                     row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                     color: z.ZodString;
                                     comfy: z.ZodBoolean;
                                     adjustable: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, "many">;
-                                wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                }>, "many">;
+                                wheels: z.ZodTuple<[ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>], null>;
-                                soundSystem: z.ZodType<baseObjectOutputType<{
+                                }>], null>;
+                                soundSystem: ObjR<{
                                     radioSupport: z.ZodNumber;
                                     bluetoothSupport: z.ZodBoolean;
                                     cdSupport: z.ZodBoolean;
                                     casetteSupport: z.ZodBoolean;
                                     usbSupport: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>;
-                            }>, z.ZodTypeDef, any>, "many">;
-                        }>, z.ZodTypeDef, any>;
-                        education: z.ZodType<baseObjectOutputType<{
-                            ceo: z.ZodType<baseObjectOutputType<{
+                                }>;
+                            }>, "many">;
+                        }>;
+                        education: ObjR<{
+                            ceo: ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>;
-                            cfo: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>;
+                            cfo: z.ZodOptional<ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>>;
-                            employees: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>>;
+                            employees: z.ZodArray<ObjR<{
                                 name: z.ZodString;
                                 age: z.ZodNumber;
                                 address: z.ZodString;
                                 phone: z.ZodString;
-                                car: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                car: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     weight: z.ZodNumber;
                                     productionYear: z.ZodNumber;
-                                    engine: z.ZodType<baseObjectOutputType<{
+                                    engine: ObjR<{
                                         power: z.ZodNumber;
                                         cylinders: z.ZodNumber;
                                         fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                        gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                        gearType: z.ZodUnion<[ObjR<{
                                             planetary: z.ZodBoolean;
                                             numGears: z.ZodNumber;
-                                        }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                        }>, ObjR<{
                                             numGears: z.ZodNumber;
                                             hasReverse: z.ZodLiteral<true>;
-                                        }>, z.ZodTypeDef, any>]>;
-                                    }>, z.ZodTypeDef, any>;
-                                    seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                        }>]>;
+                                    }>;
+                                    seats: z.ZodArray<ObjR<{
                                         heated: z.ZodBoolean;
                                         side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                         row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                         color: z.ZodString;
                                         comfy: z.ZodBoolean;
                                         adjustable: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, "many">;
-                                    wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                    }>, "many">;
+                                    wheels: z.ZodTuple<[ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                         diameter: z.ZodNumber;
                                         color: z.ZodString;
                                         punctureSafe: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>], null>;
-                                    soundSystem: z.ZodType<baseObjectOutputType<{
+                                    }>], null>;
+                                    soundSystem: ObjR<{
                                         radioSupport: z.ZodNumber;
                                         bluetoothSupport: z.ZodBoolean;
                                         cdSupport: z.ZodBoolean;
                                         casetteSupport: z.ZodBoolean;
                                         usbSupport: z.ZodBoolean;
-                                    }>, z.ZodTypeDef, any>;
-                                }>, z.ZodTypeDef, any>>;
-                                bike: z.ZodOptional<z.ZodType<baseObjectOutputType<{
+                                    }>;
+                                }>>;
+                                bike: z.ZodOptional<ObjR<{
                                     brand: z.ZodString;
                                     color: z.ZodString;
-                                }>, z.ZodTypeDef, any>>;
-                            }>, z.ZodTypeDef, any>, "many">;
-                            printers: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                }>>;
+                            }>, "many">;
+                            printers: z.ZodArray<ObjR<{
                                 brand: z.ZodString;
                                 format: z.ZodUnion<[z.ZodLiteral<"a4">, z.ZodLiteral<"a5">]>;
                                 capacity: z.ZodNumber;
-                            }>, z.ZodTypeDef, any>, "many">;
-                            cars: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                            }>, "many">;
+                            cars: z.ZodArray<ObjR<{
                                 brand: z.ZodString;
                                 weight: z.ZodNumber;
                                 productionYear: z.ZodNumber;
-                                engine: z.ZodType<baseObjectOutputType<{
+                                engine: ObjR<{
                                     power: z.ZodNumber;
                                     cylinders: z.ZodNumber;
                                     fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                                    gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                                    gearType: z.ZodUnion<[ObjR<{
                                         planetary: z.ZodBoolean;
                                         numGears: z.ZodNumber;
-                                    }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                    }>, ObjR<{
                                         numGears: z.ZodNumber;
                                         hasReverse: z.ZodLiteral<true>;
-                                    }>, z.ZodTypeDef, any>]>;
-                                }>, z.ZodTypeDef, any>;
-                                seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                                    }>]>;
+                                }>;
+                                seats: z.ZodArray<ObjR<{
                                     heated: z.ZodBoolean;
                                     side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                                     row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                                     color: z.ZodString;
                                     comfy: z.ZodBoolean;
                                     adjustable: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, "many">;
-                                wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+                                }>, "many">;
+                                wheels: z.ZodTuple<[ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                                }>, ObjR<{
                                     branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                                     diameter: z.ZodNumber;
                                     color: z.ZodString;
                                     punctureSafe: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>], null>;
-                                soundSystem: z.ZodType<baseObjectOutputType<{
+                                }>], null>;
+                                soundSystem: ObjR<{
                                     radioSupport: z.ZodNumber;
                                     bluetoothSupport: z.ZodBoolean;
                                     cdSupport: z.ZodBoolean;
                                     casetteSupport: z.ZodBoolean;
                                     usbSupport: z.ZodBoolean;
-                                }>, z.ZodTypeDef, any>;
-                            }>, z.ZodTypeDef, any>, "many">;
-                        }>, z.ZodTypeDef, any>;
-                    }>, z.ZodTypeDef, any>;
-                }>, z.ZodTypeDef, any>, "many">;
+                                }>;
+                            }>, "many">;
+                        }>;
+                    }>;
+                }>, "many">;
                 location: z.ZodString;
                 area: z.ZodNumber;
                 totalPopulation: z.ZodNumber;
-            }>, z.ZodTypeDef, any>, "many">;
-            moons: z.ZodArray<z.ZodType<baseObjectOutputType<{
+            }>, "many">;
+            moons: z.ZodArray<ObjR<{
                 color: z.ZodString;
                 weight: z.ZodNumber;
                 distance: z.ZodNumber;
-            }>, z.ZodTypeDef, any>, "many">;
-        }>, z.ZodTypeDef, any>, "many">;
-        sun: z.ZodType<baseObjectOutputType<{
+            }>, "many">;
+        }>, "many">;
+        sun: ObjR<{
             diameter: z.ZodNumber;
-        }>, z.ZodTypeDef, any>;
-        flyingTesla: z.ZodType<baseObjectOutputType<{
+        }>;
+        flyingTesla: ObjR<{
             brand: z.ZodString;
             weight: z.ZodNumber;
             productionYear: z.ZodNumber;
-            engine: z.ZodType<baseObjectOutputType<{
+            engine: ObjR<{
                 power: z.ZodNumber;
                 cylinders: z.ZodNumber;
                 fuelType: z.ZodUnion<[z.ZodLiteral<"diesel">, z.ZodLiteral<"bensin">]>;
-                gearType: z.ZodUnion<[z.ZodType<baseObjectOutputType<{
+                gearType: z.ZodUnion<[ObjR<{
                     planetary: z.ZodBoolean;
                     numGears: z.ZodNumber;
-                }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+                }>, ObjR<{
                     numGears: z.ZodNumber;
                     hasReverse: z.ZodLiteral<true>;
-                }>, z.ZodTypeDef, any>]>;
-            }>, z.ZodTypeDef, any>;
-            seats: z.ZodArray<z.ZodType<baseObjectOutputType<{
+                }>]>;
+            }>;
+            seats: z.ZodArray<ObjR<{
                 heated: z.ZodBoolean;
                 side: z.ZodUnion<[z.ZodLiteral<"left">, z.ZodLiteral<"right">, z.ZodLiteral<"center">]>;
                 row: z.ZodUnion<[z.ZodLiteral<"1st">, z.ZodLiteral<"2th">, z.ZodLiteral<"3rd">]>;
                 color: z.ZodString;
                 comfy: z.ZodBoolean;
                 adjustable: z.ZodBoolean;
-            }>, z.ZodTypeDef, any>, "many">;
-            wheels: z.ZodTuple<[z.ZodType<baseObjectOutputType<{
+            }>, "many">;
+            wheels: z.ZodTuple<[ObjR<{
                 branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                 diameter: z.ZodNumber;
                 color: z.ZodString;
                 punctureSafe: z.ZodBoolean;
-            }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+            }>, ObjR<{
                 branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                 diameter: z.ZodNumber;
                 color: z.ZodString;
                 punctureSafe: z.ZodBoolean;
-            }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+            }>, ObjR<{
                 branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                 diameter: z.ZodNumber;
                 color: z.ZodString;
                 punctureSafe: z.ZodBoolean;
-            }>, z.ZodTypeDef, any>, z.ZodType<baseObjectOutputType<{
+            }>, ObjR<{
                 branch: z.ZodUnion<[z.ZodLiteral<"continental">, z.ZodLiteral<"hankook">, z.ZodLiteral<"goodyear">, z.ZodLiteral<"michelin">]>;
                 diameter: z.ZodNumber;
                 color: z.ZodString;
                 punctureSafe: z.ZodBoolean;
-            }>, z.ZodTypeDef, any>], null>;
-            soundSystem: z.ZodType<baseObjectOutputType<{
+            }>], null>;
+            soundSystem: ObjR<{
                 radioSupport: z.ZodNumber;
                 bluetoothSupport: z.ZodBoolean;
                 cdSupport: z.ZodBoolean;
                 casetteSupport: z.ZodBoolean;
                 usbSupport: z.ZodBoolean;
-            }>, z.ZodTypeDef, any>;
-        }>, z.ZodTypeDef, any>;
-    }>, z.ZodTypeDef, any>, "many">;
-}>, z.ZodTypeDef, any>;
+            }>;
+        }>;
+    }>, "many">;
+}>;
 
 export { galaxySchema };
